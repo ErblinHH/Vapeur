@@ -20,6 +20,7 @@
     "fill-range": "^7.1.1",
     "glob-parent": "^5.1.2",
     "has-flag": "^3.0.0",
+    "hbs": "^4.2.0",
     "ignore-by-default": "^1.0.1",
     "is-binary-path": "^2.1.0",
     "is-extglob": "^2.1.1",
