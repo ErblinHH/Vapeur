@@ -1,7 +1,10 @@
-const express = require('express');
+const express = require("express");
+const { PrismaClient } = require("@prisma/client");
+const bodyParser = require("body-parser");
 
 const app = express();
-const port = 3001;
+const prisma = new PrismaClient();
+const PORT = 3001;
 
 app.get('/', (req, res) => {
     res.send('Hello  test 4');
