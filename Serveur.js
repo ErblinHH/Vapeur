@@ -135,3 +135,17 @@ app.get('/type/:id', async (req, res) => {
 });
 
 
+app.get('/editors', async (req, res) => {
+    try {
+        const editors = await prisma.editor.findMany({
+            orderBy:{
+                name:'asc',
+            },
+    });
+        res.render("editors/viewAll", { editors });
+    } catch (error) {
+        console.error("Error fetching editors:", error); 
+        res.status(500).send("Une erreur est survenue lors de la récupération des editeurs."); 
+    }
+});
+
