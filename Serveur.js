@@ -13,14 +13,45 @@ app.set("view engine", "hbs"); // On définit le moteur de template que Express 
 app.set("views", path.join(__dirname, "views")); // On définit le dossier des vues (dans lequel se trouvent les fichiers .hbs)
 hbs.registerPartials(path.join(__dirname, "views", "partials")); // On définit le dossier des partials (composants e.g. header, footer, menu...)
 
+async function initTypes() {
+    const defaultTypes = [
+        { name: "Action" },
+        { name: "Aventure" },
+        { name: "RPG" },
+        { name: "Simulation" },
+        { name: "Sport" },
+        { name: "MMORPG" },
+    ];
+
+    try {
+        for (const gameType of defaultTypes) {
+            // Utilisation de `findFirst` si `name` n'est pas unique
+            const existingType = await prisma.type.findFirst({
+                where: { name: gameType.name },
+            });
+
+            if (!existingType) {
+                await prisma.type.create({ data: gameType });
+                console.log(`Type créé : ${gameType.name}`);
+            } else {
+                console.log(`Type déjà existant : ${gameType.name}`);
+            }
+        }
+    } catch (error) {
+        console.error("Erreur lors de l'initialisation des types :", error);
+    }
+}
+
+
+app.listen(port, async () => {
+    console.log(`Server is running on http://localhost:${port}`);
+
+    await initTypes();
+});
+
 app.get('/', (req, res) => {
     res.render("homePage");
 });
-
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});
-
 
 app.get('/games', async (req, res) => {
     try {
