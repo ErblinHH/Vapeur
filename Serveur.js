@@ -49,6 +49,8 @@ app.listen(port, async () => {
     await initTypes();
 });
 
+
+
 app.get('/', (req, res) => {
     res.render("homePage");
 });
@@ -93,5 +95,19 @@ app.get('/game/:id', async (req, res) => {
     }
 });
 
+
+app.get('/types', async (req, res) => {
+    try {
+        const types = await prisma.type.findMany({
+            orderBy:{
+                name:'asc',
+            },
+    });
+        res.render("types/viewAll", { types });
+    } catch (error) {
+        console.error("Error fetching types:", error); 
+        res.status(500).send("Une erreur est survenue lors de la récupération des genres."); 
+    }
+});
 
 
