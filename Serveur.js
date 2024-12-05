@@ -118,7 +118,11 @@ app.get('/type/:id', async (req, res) => {
                 id: parseInt(id), // Conversion de l'ID en entier
             },
             include: {
-                games: true,  // Inclut l'éditeur du jeu
+                games:{
+                    orderBy : {
+                        name:'asc',
+                    },
+                }, 
             },
             
         });
@@ -149,3 +153,30 @@ app.get('/editors', async (req, res) => {
     }
 });
 
+app.get('/editor/:id', async (req, res) => {
+    const { id } = req.params; // Extraction de l'ID depuis les paramètres de l'URL
+    try {
+        const editor = await prisma.editor.findUnique({
+            where: {
+                id: parseInt(id), // Conversion de l'ID en entier
+            },
+            include: {
+                games:{
+                    orderBy : {
+                        name:'asc',
+                    },
+                }, 
+            },
+            
+        });
+
+        if (editor) {
+            res.render("editors/view", { editor });
+        } else {
+            res.status(404).send("Type not found.");
+        }
+    } catch (error) {
+        console.error("Error fetching editor:", error); // Log de l'erreur pour le développeur
+        res.status(500).send("Une erreur est survenue. Détails: " + error.message);
+    }
+});
