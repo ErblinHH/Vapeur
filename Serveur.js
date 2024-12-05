@@ -21,7 +21,46 @@ app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
-app.get('/games',async (req, res) =>{
-    const games = await prisma.game.findMany();
-    res.render("games/viewAll", {games});
+
+app.get('/games', async (req, res) => {
+    try {
+        const games = await prisma.game.findMany({
+            orderBy:{
+                name:'asc',
+            },
+    });
+        res.render("games/viewAll", { games });
+    } catch (error) {
+        console.error("Error fetching games:", error); 
+        res.status(500).send("Une erreur est survenue lors de la récupération des jeux."); 
+    }
 });
+
+
+app.get('/game/:id', async (req, res) => {
+    const { id } = req.params; // Extraction de l'ID depuis les paramètres de l'URL
+    try {
+        const game = await prisma.game.findUnique({
+            where: {
+                id: parseInt(id), // Conversion de l'ID en entier
+            },
+            include: {
+                editor: true,  // Inclut l'éditeur du jeu
+                type: true,    // Inclut le type du jeu
+            },
+            
+        });
+
+        if (game) {
+            res.render("games/view", { game });
+        } else {
+            res.status(404).send("Game not found.");
+        }
+    } catch (error) {
+        console.error("Error fetching game:", error); // Log de l'erreur pour le développeur
+        res.status(500).send("Une erreur est survenue. Détails: " + error.message);
+    }
+});
+
+
+

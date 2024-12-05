@@ -15,15 +15,16 @@ datasource db {
 
 model Editor {
   id    Int     @id @default(autoincrement())
-  nom   String
+  name  String  @default("Unknown Editor")
   games Game[]  
 }
 
 model Type {
-  id    Int     @id @default(autoincrement())
-  nom   String
-  games Game[]  
+  id    Int     @id @default(autoincrement())  
+  name  String?                   
+  games Game[]                                  
 }
+
 
 model Game {
   id          Int      @id @default(autoincrement())
