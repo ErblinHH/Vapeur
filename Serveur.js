@@ -110,4 +110,28 @@ app.get('/types', async (req, res) => {
     }
 });
 
+app.get('/type/:id', async (req, res) => {
+    const { id } = req.params; // Extraction de l'ID depuis les paramètres de l'URL
+    try {
+        const type = await prisma.type.findUnique({
+            where: {
+                id: parseInt(id), // Conversion de l'ID en entier
+            },
+            include: {
+                games: true,  // Inclut l'éditeur du jeu
+            },
+            
+        });
+
+        if (type) {
+            res.render("types/view", { type });
+        } else {
+            res.status(404).send("Type not found.");
+        }
+    } catch (error) {
+        console.error("Error fetching type:", error); // Log de l'erreur pour le développeur
+        res.status(500).send("Une erreur est survenue. Détails: " + error.message);
+    }
+});
+
 
