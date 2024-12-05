@@ -13,8 +13,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Editor {
   id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  nom   String
+  games Game[]  
+}
+
+model Type {
+  id    Int     @id @default(autoincrement())
+  nom   String
+  games Game[]  
+}
+
+model Game {
+  id          Int      @id @default(autoincrement())
+  description String
+  releaseDate DateTime
+  editorId    Int      // Clé étrangère pour Editor
+  typeId      Int      // Clé étrangère pour Type
+
+  editor      Editor   @relation(fields: [editorId], references: [id])
+  type        Type     @relation(fields: [typeId], references: [id])
 }
