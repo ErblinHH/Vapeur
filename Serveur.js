@@ -20,3 +20,8 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+app.get('/games',async (req, res) =>{
+    const games = await prisma.game.findMany();
+    res.render("games/viewAll", {games});
+});

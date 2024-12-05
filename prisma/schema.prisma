@@ -27,8 +27,9 @@ model Type {
 
 model Game {
   id          Int      @id @default(autoincrement())
+  name        String
   description String
-  releaseDate DateTime
+  releaseDate DateTime 
   editorId    Int      // Clé étrangère pour Editor
   typeId      Int      // Clé étrangère pour Type
 
