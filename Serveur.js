@@ -167,29 +167,39 @@ app.get('/type/:id', async (req, res) => {
 
 // EDITEURS
 
+// Affiche tout les éditeurs
 app.get('/editors', async (req, res) => {
     try {
+        // Récupère la liste de tout les éditeurs
         const editors = await prisma.editor.findMany({
+            // Dans l'ordre alphabétique
             orderBy:{
                 name:'asc',
             },
     });
+    // Envoie vers la page d'affichage
         res.render("editors/viewAll", { editors });
-    } catch (error) {
+    } 
+    // Catch les erreurs
+    catch (error) {
         console.error("Error fetching editors:", error); 
         res.status(500).send("Une erreur est survenue lors de la récupération des editeurs."); 
     }
 });
 
+// Récupère un seul éditeur et l'affiche
 app.get('/editor/:id', async (req, res) => {
-    const { id } = req.params; // Extraction de l'ID depuis les paramètres de l'URL
+    const { id } = req.params; // Récupére l'id dans l'url
     try {
+        // Requete pour récuperer l'éditeur
         const editor = await prisma.editor.findUnique({
             where: {
                 id: parseInt(id), // Conversion de l'ID en entier
             },
+            // Inclus la liste de ses jeux
             include: {
                 games:{
+                    // Range les jeux dans l'ordre alphabétique
                     orderBy : {
                         name:'asc',
                     },
@@ -197,14 +207,41 @@ app.get('/editor/:id', async (req, res) => {
             },
             
         });
-
+        // Si l'éditeur existe, renvoie vers la page d'affichage
         if (editor) {
             res.render("editors/view", { editor });
-        } else {
-            res.status(404).send("Type not found.");
+        } else { // Editeur n'existe pas
+            res.status(404).send("Editor not found.");
         }
+
+    // Catch les erreurs
     } catch (error) {
         console.error("Error fetching editor:", error); // Log de l'erreur pour le développeur
         res.status(500).send("Une erreur est survenue. Détails: " + error.message);
+    }
+});
+
+// Suppression d'un éditeur
+app.get('/editor/delete/:id', async (req, res) => {
+    const { id } = req.params; // Récupére l'id dans l'url
+    try {
+        // Requete pour supprimer l'éditeur (l'éditeur peut etre null pour un jeu, lorsque qu'il est supprimé, il est automatiquement passé à null)
+        const editor = await prisma.editor.delete({
+            where: {
+                id: parseInt(id),
+            },
+        });
+        // Redirige vers la home page, après la suppression
+        res.redirect("/");
+    } 
+
+    // Catch les erreurs
+    catch (error) {
+        console.error("Error deleting editor:", error);
+        if (error.code === 'P2025') { // Erreur Prisma, si l'id à supprimer n'existe pas
+            res.status(404).send("Editor not found");
+        } else { // Autre erreur
+            res.status(500).send("An error occurred while deleting the editor");
+        }
     }
 });
