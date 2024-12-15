@@ -31,9 +31,9 @@ model Game {
   name        String
   description String
   releaseDate DateTime 
-  editorId    Int      // Clé étrangère pour Editor
+  editorId    Int?      // Clé étrangère pour Editor
   typeId      Int      // Clé étrangère pour Type
 
-  editor      Editor   @relation(fields: [editorId], references: [id])
+  editor      Editor?   @relation(fields: [editorId], references: [id])
   type        Type     @relation(fields: [typeId], references: [id])
 }
