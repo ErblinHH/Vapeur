@@ -42,18 +42,20 @@ async function initTypes() {
     }
 }
 
-
+// Serveur
 app.listen(port, async () => {
     console.log(`Server is running on http://localhost:${port}`);
 
     await initTypes();
 });
 
-
-
+// HomePage
 app.get('/', (req, res) => {
     res.render("homePage");
 });
+
+
+// JEUX 
 
 app.get('/games', async (req, res) => {
     try {
@@ -71,15 +73,15 @@ app.get('/games', async (req, res) => {
 
 
 app.get('/game/:id', async (req, res) => {
-    const { id } = req.params; // Extraction de l'ID depuis les paramètres de l'URL
+    const { id } = req.params; 
     try {
         const game = await prisma.game.findUnique({
             where: {
-                id: parseInt(id), // Conversion de l'ID en entier
+                id: parseInt(id), 
             },
             include: {
-                editor: true,  // Inclut l'éditeur du jeu
-                type: true,    // Inclut le type du jeu
+                editor: true,  
+                type: true,    
             },
             
         });
@@ -95,6 +97,30 @@ app.get('/game/:id', async (req, res) => {
     }
 });
 
+app.get('/game/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const game = await prisma.game.delete({
+            where: {
+                id: parseInt(id),
+            },
+        });
+        res.redirect("/");
+    } 
+
+    catch (error) {
+        console.error("Error deleting game:", error);
+        if (error.code === 'P2025') { // Erreur Prisma
+            res.status(404).send("Game not found");
+        } else {
+            res.status(500).send("An error occurred while deleting the game");
+        }
+    }
+});
+
+
+
+// GENRES
 
 app.get('/types', async (req, res) => {
     try {
@@ -138,6 +164,8 @@ app.get('/type/:id', async (req, res) => {
     }
 });
 
+
+// EDITEURS
 
 app.get('/editors', async (req, res) => {
     try {
