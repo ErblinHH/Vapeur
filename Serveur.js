@@ -88,20 +88,20 @@ app.get('/games', async (req, res) => {
 });
 
 // rajout d'un jeu 
-app.get('/games/new', async (req, res) => {
+app.get('/games/newGame', async (req, res) => {
     try {
         // Récupérer les éditeurs et types pour les afficher dans le formulaire
         const editors = await prisma.editor.findMany();
         const types = await prisma.type.findMany();
         // Rendre la vue du formulaire
-        res.render("games/add", { editors, types });
+        res.render("games/newGame", { editors, types });
     } catch (error) {
         console.error("Error fetching editors or types:", error);
         res.status(500).send("Une erreur est survenue lors de la récupération des éditeurs ou types.");
     }
 });
 // Requete POST pour insert le jeu
-app.post('/games/new', async (req, res) => {
+app.post('/games/newGame', async (req, res) => {
     const { name, description, releaseDate, editorId, typeId } = req.body;
 
     try {
@@ -180,9 +180,31 @@ app.get('/game/delete/:id', async (req, res) => {
     }
 });
 
+////////// EDITEURS //////////
+
+// rajout d'un éditeur
+app.get('/games/newEditor', async (req, res) => {
+    res.render("editors/newEditor");
+});
+//requete post pour rajouter un editeur 
+app.post('/games/newEditor', async (req, res) => {
+    const { name } = req.body;
+
+    try {
+        // Ajout d'un éditeur dans la base de données
+        await prisma.editor.create({
+            data: { name },
+        });
+
+        // Redirection vers la liste des éditeurs
+        res.redirect('/games');
+    } catch (error) {
+        console.error("Erreur lors de l'ajout de l'éditeur :", error);
+        res.status(500).send("Une erreur est survenue lors de l'ajout de l'éditeur.");
+    }
+});
 
 
-// GENRES
 
 // Affiche tout les éditeurs
 app.get('/types', async (req, res) => {
@@ -203,6 +225,8 @@ app.get('/types', async (req, res) => {
         res.status(500).send("Une erreur est survenue lors de la récupération des genres."); 
     }
 });
+
+// GENRES
 
 // Récupère un seul genre et l'affiche avec ses jeux
 app.get('/type/:id', async (req, res) => {
