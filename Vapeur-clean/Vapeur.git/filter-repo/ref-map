@@ -1,0 +1,15 @@
+old                                      new                                      ref
+1db4bac7dfa76036c8de707fe2dc867fe94b4d74 87c88547f8f59bc9814d1448b4634745feb118aa refs/heads/10-afficher-la-liste-des-genres
+f741cff82bc2859149a4156ac15090209f171202 a868bfb63eed74557cc772d1805fb895fde63f8c refs/heads/11-afficher-la-liste-des-jeux-dun-genre
+45477bc0034f5e481f6177def6ef88c24973615a 59a0070abc537724b162fa256598c770dd03d9c4 refs/heads/13-afficher-la-liste-des-éditeurs
+12f052c9ac5768e05eddf9216f81df8adcd3bd8c e38497f37f5cbc3d20a1c22655e321e98990783a refs/heads/14-afficher-la-liste-des-jeux-dun-éditeur
+a457ec6fd28b2a18c05760977567637932bc1b8f bc103fc16b20301978654f402543ec426559caff refs/heads/16-suppression-dun-éditeur
+e2a339821932d94ccb0324592cd920e9df5f7e74 4e51f7fcf19ba43df4bf2c176a27593592f71e51 refs/heads/2-afficher-la-liste-des-jeux-mis-en-avant-sur-la-page-daccueil
+4c077a67148cf50b94ec521733ea218e0ae4a2eb 5b72dc6549b5552d5d6014530c5ee87323b8b055 refs/heads/23-créer-les-genre-de-jeux-avant-le-lancement-de-lapplication
+643d17dbef013c2c6a250916be24dd9fc28a9991 2b97970467e51ca89b805ab9bfb20f1908560e5c refs/heads/29-header
+74a2384d35b50effe4c99d7111394e8677d79a0e c31b6f48d39eed3b0f4d3107d434ae8ce782100c refs/heads/4-afficher-la-liste-de-tous-les-jeux
+a875a9aa1aad3246629e2daadbcb0cee20994754 4d9e44fc195bbea6e437acdf5fd22fc1031bb27e refs/heads/6-afficher-le-détail-dun-jeu-avec-ses-infos-son-genre-et-son-éditeur
+8843334dfa93b5c0c13d94176b3895906d6d17bf 144dc77fc2fedd80d6cb31bb48242e593cc13050 refs/heads/7-modification-dun-jeu-nom-description-date-de-sortie-genre-éditeur
+535e7a5a4bd57ef8f4486bb6aa3458ff136ccaaa b604b71e20751bfb48aa51d393d60baa2341f6ab refs/heads/8-suppression-dun-jeu
+fa7a343254621993a614a9960d662593016009a9 7f8ccd6cd68ab74a929825ef7139eba89e5c6797 refs/heads/main
+c832ec171ef6f69a7077ceec199223e9050745ae 7cd46f2fd8981853448dff5298ef74c5b9f6ce4f refs/stash

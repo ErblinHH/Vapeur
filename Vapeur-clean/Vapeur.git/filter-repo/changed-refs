@@ -1,0 +1,14 @@
+refs/heads/10-afficher-la-liste-des-genres
+refs/heads/11-afficher-la-liste-des-jeux-dun-genre
+refs/heads/13-afficher-la-liste-des-éditeurs
+refs/heads/14-afficher-la-liste-des-jeux-dun-éditeur
+refs/heads/16-suppression-dun-éditeur
+refs/heads/2-afficher-la-liste-des-jeux-mis-en-avant-sur-la-page-daccueil
+refs/heads/23-créer-les-genre-de-jeux-avant-le-lancement-de-lapplication
+refs/heads/29-header
+refs/heads/4-afficher-la-liste-de-tous-les-jeux
+refs/heads/6-afficher-le-détail-dun-jeu-avec-ses-infos-son-genre-et-son-éditeur
+refs/heads/7-modification-dun-jeu-nom-description-date-de-sortie-genre-éditeur
+refs/heads/8-suppression-dun-jeu
+refs/heads/main
+refs/stash
