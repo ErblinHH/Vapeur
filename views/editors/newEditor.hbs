@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un Éditeur</title>
+</head>
+<body>
+    <h1>Ajouter un Éditeur</h1>
+    <form action="/games/newEditor" method="POST">
+        <div>
+            <label for="name">Nom de l'Éditeur :</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <button type="submit">Ajouter</button>
+    </form>
+
+    <a href="/editors">Retour à la liste des éditeurs</a>
+</body>
+</html>
