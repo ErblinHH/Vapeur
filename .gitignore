@@ -21,6 +21,7 @@ build/
 .prisma/
 .prisma_cache/
 migrations/
+*.db
 
 # OS-specific files
 .DS_Store
