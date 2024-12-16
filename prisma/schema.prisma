@@ -33,6 +33,7 @@ model Game {
   releaseDate DateTime 
   editorId    Int?      // Clé étrangère pour Editor
   typeId      Int      // Clé étrangère pour Type
+  highlighted Boolean  @default(false) 
 
   editor      Editor?   @relation(fields: [editorId], references: [id])
   type        Type     @relation(fields: [typeId], references: [id])
