@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un Jeu</title>
+</head>
+<body>
+    <h1>Ajouter un nouveau jeu</h1>
+    <form action="/games" method="POST">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" required></textarea><br>
+
+        <label for="releaseDate">Date de sortie :</label>
+        <input type="date" id="releaseDate" name="releaseDate" required><br>
+
+        <label for="editorId">Éditeur :</label>
+        <select id="editorId" name="editorId">
+            <option value="">-- Aucun éditeur --</option>
+            {{#each editors}}
+                <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+        </select><br>
+
+        <label for="typeId">Type :</label>
+        <select id="typeId" name="typeId" required>
+            {{#each types}}
+                <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+        </select><br>
+
+        <button type="submit">Ajouter</button>
+    </form>
+</body>
+</html>
