@@ -15,7 +15,7 @@ hbs.registerPartials(path.join(__dirname, "views", "partials")); // On définit 
 
 // Middleware pour analyser les données POST en JSON
 app.use(express.json());
-// Middleware pour analyser les données POST de type "application/x-www-form-urlencoded"
+// Middleware pour traiter les corps de requête URL-encodés (par exemple, formulaires HTML)
 app.use(express.urlencoded({ extended: true }));
 
 // Initialise les genres
@@ -89,7 +89,7 @@ app.get('/', async (req, res) => {
 });
 
 
-// JEUX 
+////////////////////// JEUX //////////////////////
 
 // Affiche tout les jeux
 app.get('/games', async (req, res) => {
@@ -110,6 +110,44 @@ app.get('/games', async (req, res) => {
         res.status(500).send("Une erreur est survenue lors de la récupération des jeux."); 
     }
 });
+
+// rajout d'un jeu 
+app.get('/games/new', async (req, res) => {
+    try {
+        // Récupérer les éditeurs et types pour les afficher dans le formulaire
+        const editors = await prisma.editor.findMany();
+        const types = await prisma.type.findMany();
+        // Rendre la vue du formulaire
+        res.render("games/add", { editors, types });
+    } catch (error) {
+        console.error("Error fetching editors or types:", error);
+        res.status(500).send("Une erreur est survenue lors de la récupération des éditeurs ou types.");
+    }
+});
+// Requete POST pour insert le jeu
+app.post('/games/new', async (req, res) => {
+    const { name, description, releaseDate, editorId, typeId } = req.body;
+
+    try {
+        // Insérer un nouveau jeu dans la base de données
+        await prisma.game.create({
+            data: {
+                name,
+                description,
+                releaseDate: new Date(releaseDate),
+                editorId: editorId ? parseInt(editorId) : null,
+                typeId: parseInt(typeId),
+            },
+        });
+
+        // Rediriger vers la liste des jeux
+          res.redirect('/games');
+    } catch (error) {
+        console.error("Error adding new game:", error);
+        res.status(500).send("Une erreur est survenue lors de l'ajout du jeu.");
+    }
+});
+
 
 // Récupère un seul jeu et l'affiche avec son éditeur et son genre
 app.get('/game/:id', async (req, res) => {
@@ -324,6 +362,8 @@ app.get('/editor/:id', async (req, res) => {
         res.status(500).send("Une erreur est survenue. Détails: " + error.message);
     }
 });
+
+
 
 // Suppression d'un éditeur
 app.get('/editor/delete/:id', async (req, res) => {

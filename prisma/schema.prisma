@@ -38,3 +38,5 @@ model Game {
   editor      Editor?   @relation(fields: [editorId], references: [id])
   type        Type     @relation(fields: [typeId], references: [id])
 }
+
+
