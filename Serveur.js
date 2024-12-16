@@ -13,6 +13,10 @@ app.set("view engine", "hbs"); // On définit le moteur de template que Express 
 app.set("views", path.join(__dirname, "views")); // On définit le dossier des vues (dans lequel se trouvent les fichiers .hbs)
 hbs.registerPartials(path.join(__dirname, "views", "partials")); // On définit le dossier des partials (composants e.g. header, footer, menu...)
 
+app.use(express.json());
+// Middleware pour traiter les corps de requête URL-encodés (par exemple, formulaires HTML)
+app.use(express.urlencoded({ extended: true }));
+
 // Initialise les genres
 async function initTypes() {
     // Liste de tout les genres
@@ -61,7 +65,7 @@ app.get('/', (req, res) => {
 });
 
 
-// JEUX 
+////////////////////// JEUX //////////////////////
 
 // Affiche tout les jeux
 app.get('/games', async (req, res) => {
@@ -83,7 +87,7 @@ app.get('/games', async (req, res) => {
     }
 });
 
-// rajoute un jeu 
+// rajout d'un jeu 
 app.get('/games/new', async (req, res) => {
     try {
         // Récupérer les éditeurs et types pour les afficher dans le formulaire
@@ -96,8 +100,8 @@ app.get('/games/new', async (req, res) => {
         res.status(500).send("Une erreur est survenue lors de la récupération des éditeurs ou types.");
     }
 });
-// Requete POST pour insert le jeu dans la BDD
-app.post('/games', async (req, res) => {
+// Requete POST pour insert le jeu
+app.post('/games/new', async (req, res) => {
     const { name, description, releaseDate, editorId, typeId } = req.body;
 
     try {
@@ -113,7 +117,7 @@ app.post('/games', async (req, res) => {
         });
 
         // Rediriger vers la liste des jeux
-        res.redirect('/games');
+          res.redirect('/games');
     } catch (error) {
         console.error("Error adding new game:", error);
         res.status(500).send("Une erreur est survenue lors de l'ajout du jeu.");
@@ -290,6 +294,8 @@ app.get('/editor/:id', async (req, res) => {
         res.status(500).send("Une erreur est survenue. Détails: " + error.message);
     }
 });
+
+
 
 // Suppression d'un éditeur
 app.get('/editor/delete/:id', async (req, res) => {
