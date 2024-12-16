@@ -1,0 +1,27 @@
+<form action="/games/new" method="POST">
+    <label for="name">Nom du jeu :</label>
+    <input type="text" id="name" name="name" required>
+    
+    <label for="description">Description :</label>
+    <textarea id="description" name="description" required></textarea>
+    
+    <label for="releaseDate">Date de sortie :</label>
+    <input type="date" id="releaseDate" name="releaseDate" required>
+    
+    <label for="editorId">Éditeur :</label>
+    <select id="editorId" name="editorId">
+        <option value="">Aucun</option>
+        {{#each editors}}
+            <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    
+    <label for="typeId">Type :</label>
+    <select id="typeId" name="typeId" required>
+        {{#each types}}
+            <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    
+    <button type="submit">Ajouter le jeu</button>
+</form>
