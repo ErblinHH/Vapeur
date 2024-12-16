@@ -4,6 +4,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>
-        <p>Salut les bg</p>
+        <h1>Jeux mis en avant</h1>
+        {{#each games}}
+        <li>
+            <a href="/game/{{id}}">{{name}}</a>
+        </li>
+        {{/each}}
+        <h3><a href="/games/addHighlighted">Ajouter des jeux</a></h3>
     </body>
 </html>

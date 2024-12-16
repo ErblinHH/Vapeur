@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    <h1>Modifier les jeux mis en avant</h1>
+    <form action="/games/addHighlighted" method="POST">
+        <ul>
+            {{#each games}}
+            <li>
+                <label>
+                    <input
+                        type="checkbox"
+                        name="games[{{@index}}][highlighted]"
+                        value="true"
+                        {{#if highlighted}}checked{{/if}}
+                    />
+                    <input type="hidden" name="games[{{@index}}][id]" value="{{id}}" />
+                    {{name}}
+                </label>
+            </li>
+            {{/each}}
+        </ul>
+        <button type="submit">Mettre à jour</button>
+    </form>
+</body>
+</html>
