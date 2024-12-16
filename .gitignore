@@ -21,6 +21,9 @@ build/
 .prisma/
 .prisma_cache/
 migrations/
+# Ignorer les fichiers de la base de données SQLite locale (si utilisée)
+database.db
+*.sqlite
 
 # OS-specific files
 .DS_Store

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un Jeu</title>
+</head>
+<body>
+    <h1>Modifier le Jeu : {{game.name}}</h1>
+    <form action="/game/edit/{{game.id}}" method="POST">
+        <div>
+            <label for="name">Nom du Jeu :</label>
+            <input type="text" id="name" name="name" value="{{game.name}}" required>
+        </div>
+        <div>
+            <label for="description">Description :</label>
+            <textarea id="description" name="description" required>{{game.description}}</textarea>
+        </div>
+        <div>
+            <label for="releaseDate">Date de Sortie :</label>
+            <input type="date" id="releaseDate" name="releaseDate" value="{{game.releaseDate}}" required>
+        </div>
+        <div>
+            <label for="editorId">Éditeur :</label>
+            <select id="editorId" name="editorId">
+                <option value="">-- Aucun éditeur --</option>
+                {{#each editors}}
+                    <option value="{{this.id}}" {{#if (eq this.id ../game.editorId)}}selected{{/if}}>{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div>
+            <label for="typeId">Type :</label>
+            <select id="typeId" name="typeId" required>
+                {{#each types}}
+                    <option value="{{this.id}}" {{#if (eq this.id ../game.typeId)}}selected{{/if}}>{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <button type="submit">Enregistrer les modifications</button>
+    </form>
+
+    <a href="/games">Retour à la liste des jeux</a>
+</body>
+</html>
