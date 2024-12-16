@@ -8,6 +8,14 @@ const app = express();
 const prisma = new PrismaClient();
 const port = 3001;
 
+
+// Ajouter un helper global 'eq' pour comparer deux valeurs
+hbs.registerHelper('eq', function (a, b) {
+    return a === b;
+});
+
+
+
 // Configuration de Handlebars pour Express
 app.set("view engine", "hbs"); // On définit le moteur de template que Express va utiliser
 app.set("views", path.join(__dirname, "views")); // On définit le dossier des vues (dans lequel se trouvent les fichiers .hbs)
@@ -152,6 +160,57 @@ app.get('/game/:id', async (req, res) => {
     catch (error) {
         console.error("Error fetching game:", error);
         res.status(500).send("Une erreur est survenue. Détails: " + error.message);
+    }
+});
+
+// Modification d'un jeu
+app.get('/game/edit/:id', async (req, res) => {
+    const { id } = req.params; // Récupére l'id dans l'url
+    try {
+        // Récupérer le jeu, les éditeurs et les types
+        const game = await prisma.game.findUnique({
+            where: { id: parseInt(id) },
+        });
+        const editors = await prisma.editor.findMany();
+        const types = await prisma.type.findMany();
+
+        // Si le jeu existe, renvoie vers la page d'édition
+        if (game) {
+            res.render("games/editGame", { game, editors, types });
+        } else { // Le jeu n'existe pas
+            res.status(404).send("Game not found.");
+        }
+    } 
+    // Catch les erreurs
+    catch (error) {
+        console.error("Error fetching game for edit:", error);
+        res.status(500).send("Une erreur est survenue lors de la récupération du jeu.");
+    }
+});
+
+// Requete POST pour modifier le jeu
+app.post('/game/edit/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, description, releaseDate, editorId, typeId } = req.body;
+
+    try {
+        // Mettre à jour le jeu dans la base de données
+        await prisma.game.update({
+            where: { id: parseInt(id) },
+            data: {
+                name,
+                description,
+                releaseDate: new Date(releaseDate),
+                editorId: editorId ? parseInt(editorId) : null,
+                typeId: parseInt(typeId),
+            },
+        });
+
+        // Rediriger vers la liste des jeux
+        res.redirect('/games');
+    } catch (error) {
+        console.error("Error updating game:", error);
+        res.status(500).send("Une erreur est survenue lors de la modification du jeu.");
     }
 });
 
