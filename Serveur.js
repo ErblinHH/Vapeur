@@ -13,6 +13,7 @@ app.set("view engine", "hbs"); // On définit le moteur de template que Express 
 app.set("views", path.join(__dirname, "views")); // On définit le dossier des vues (dans lequel se trouvent les fichiers .hbs)
 hbs.registerPartials(path.join(__dirname, "views", "partials")); // On définit le dossier des partials (composants e.g. header, footer, menu...)
 
+// Middleware pour analyser les données POST en JSON
 app.use(express.json());
 // Middleware pour traiter les corps de requête URL-encodés (par exemple, formulaires HTML)
 app.use(express.urlencoded({ extended: true }));
@@ -59,9 +60,32 @@ app.listen(port, async () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
-// HomePage
-app.get('/', (req, res) => {
-    res.render("homePage");
+// HomePage, affiche les jeux mis en avant
+app.get('/', async (req, res) => {
+    try {
+        // Récupère les jeux mis en avant
+        const games = await prisma.game.findMany({
+            // Uniquement si le jeu est mis en avant(<=> highlighted = true)
+            where: {
+                highlighted: true,
+            },
+            // Dans l'ordre alphabétique
+            orderBy:{
+                name:'asc',
+            },
+        });
+        // Envoie la page d'accueil avec les jeux mis en avant
+        res.render("homePage", { games });
+    }
+    // Catch les erreurs
+    catch (error) {
+        console.error("Erreur lors de la récupération des jeux mis en avant :", error);
+        // Renvoie vers la page d'accueil avec un message d'erreur
+        res.status(500).render("homePage", {
+            errorMessage: "Une erreur est survenue lors du chargement des jeux.",
+        });
+    }
+    
 });
 
 
@@ -179,6 +203,51 @@ app.get('/game/delete/:id', async (req, res) => {
         }
     }
 });
+
+// Ajout des jeux à mettre en avant
+app.get('/games/addHighlighted', async (req, res) => {
+    try {
+        // Récupère tous les jeux
+        const games = await prisma.game.findMany({
+            orderBy: {
+                name: 'asc',
+            },
+        });
+
+        // Envoie vers une page de sélection, avec tout les jeux et une checkbox (coché si a ajouté, et inversement)
+        res.render('games/addHighlighted', { games });
+    } 
+    // Catch les erreurs
+    catch (error) {
+        console.error("Error fetching games:", error);
+        res.status(500).send("Une erreur est survenue lors de la récupération des jeux.");
+    }
+});
+
+// Met à jour le champ highlighted (en fonction du la checkbox du get précédent)
+app.post('/games/addHighlighted', async (req, res) => {
+    try {
+        // Récupérer les données depuis req.body
+        const updatedGames = req.body.games; // Les jeux avec leur état 'highlighted' (<=> l'etat de la checkbox)
+
+        // Mettre à jour chaque jeu individuellement
+        await Promise.all(
+            updatedGames.map(async (game) => {
+                await prisma.game.update({
+                    where: { id: parseInt(game.id) },
+                    data: { highlighted: game.highlighted === 'true' }, // Met le booléen a true si la checkbox est coché et inversement
+                });
+            })
+        );
+        // Redirige vers la page d'accueil
+        res.redirect('/');
+    } 
+    // Catch les erreurs
+    catch (error) {
+        console.error("Error updating games:", error);
+        res.status(500).send("Une erreur est survenue lors de la mise à jour des jeux.");
+    }
+});       
 
 ////////// EDITEURS //////////
 
