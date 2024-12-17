@@ -6,6 +6,8 @@
     <body>
         <h1>Editeurs</h1>
             <p>{{editor.name}}</p>
+        <button type="submit" onclick="window.location.href='/editor/edit/{{editor.id}}'">Edit editor</button>
+
         <h1>Liste des jeux</h1>
 
         {{#each editor.games}}
