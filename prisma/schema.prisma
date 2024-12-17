@@ -26,6 +26,16 @@ model Type {
 }
 
 
+model Photo {
+  id         Int      @id @default(autoincrement())
+  filename   String   // Nom ou chemin du fichier
+  uploadedAt DateTime @default(now())
+  userId     Int?     // Optionnel : associer à un utilisateur
+  gameId     Int      // Clé étrangère pour Game
+
+  game       Game     @relation(fields: [gameId], references: [id]) // Relation avec Game
+}
+
 model Game {
   id          Int      @id @default(autoincrement())
   name        String
@@ -37,6 +47,5 @@ model Game {
 
   editor      Editor?   @relation(fields: [editorId], references: [id])
   type        Type     @relation(fields: [typeId], references: [id])
+  photos      Photo[]  // Relation avec Photo
 }
-
-

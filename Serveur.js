@@ -7,7 +7,8 @@ const path = require('path');
 const app = express();
 const prisma = new PrismaClient();
 const port = 3001;
-
+const upload = require('./upload'); // Middleware Multer pour gérer l'upload
+app.use('/uploads', express.static('uploads')); // Rendre les fichiers uploadés accessibles
 
 // Ajouter un helper global 'eq' pour comparer deux valeurs
 hbs.registerHelper('eq', function (a, b) {
@@ -132,13 +133,15 @@ app.get('/games/newGame', async (req, res) => {
         res.status(500).send("Une erreur est survenue lors de la récupération des éditeurs ou types.");
     }
 });
-// Requete POST pour insert le jeu
-app.post('/games/newGame', async (req, res) => {
-    const { name, description, releaseDate, editorId, typeId } = req.body;
+
+
+// Requête POST pour ajouter un jeu et sa photo
+app.post('/games/newGame', upload.single('photo'), async (req, res) => {
+    const { name, description, releaseDate, editorId, typeId ,filename,gameId} = req.body;
 
     try {
-        // Insérer un nouveau jeu dans la base de données
-        await prisma.game.create({
+        // Étape 1 : Insérer le jeu dans la base de données
+        const newGame = await prisma.game.create({
             data: {
                 name,
                 description,
@@ -147,12 +150,21 @@ app.post('/games/newGame', async (req, res) => {
                 typeId: parseInt(typeId),
             },
         });
+        // Étape 2 : Si une photo a été uploadée, l'ajouter à la table Photo
+        if (req.file) {
+            await prisma.photo.create({
+                data: {
+                    filename: req.file.path, // Chemin vers l'image dans "uploads/"
+                    gameId: newGame.id,      // Associer la photo au jeu
+                },
+            });
+        }
 
-        // Rediriger vers la liste des jeux
-          res.redirect('/games');
+        // Redirection après succès
+        res.redirect('/games');
     } catch (error) {
-        console.error("Error adding new game:", error);
-        res.status(500).send("Une erreur est survenue lors de l'ajout du jeu.");
+        console.error("Erreur complète :", error); // Log complet de l'erreur
+        res.status(500).send("Une erreur est survenue lors de l'ajout du jeu et de la photo.");
     }
 });
 
@@ -473,3 +485,72 @@ app.get('/editor/delete/:id', async (req, res) => {
         }
     }
 });
+
+
+
+
+
+
+
+
+// Route pour uploader une photo liée à un jeu
+app.post('/game/photo', upload.single('photo'), async (req, res) => {
+  try {
+    const { gameId } = req.body; // ID du jeu associé à la photo
+
+    // Validation de l'input
+    if (!gameId) {
+      return res.status(400).json({ message: "L'ID du jeu est requis" });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ message: 'Aucun fichier trouvé' });
+    }
+
+    // Vérifie si le jeu existe
+    const gameExists = await prisma.game.findUnique({
+      where: { id: parseInt(gameId) },
+    });
+
+    if (!gameExists) {
+      return res.status(404).json({ message: 'Jeu non trouvé' });
+    }
+
+    // Crée une nouvelle entrée pour la photo dans la BDD
+    const photo = await prisma.photo.create({
+      data: {
+        filename: req.file.path, // Chemin de stockage de l'image
+        gameId: parseInt(gameId), // Associe la photo au jeu
+      },
+    });
+
+    res.status(201).json({
+      message: 'Photo uploadée et associée au jeu avec succès',
+      photo,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+// Route pour récupérer toutes les photos associées à un jeu
+app.get('/photos/:gameId', async (req, res) => {
+  try {
+    const { gameId } = req.params;
+
+    const photos = await prisma.photo.findMany({
+      where: { gameId: parseInt(gameId) },
+    });
+
+    if (photos.length === 0) {
+      return res.status(404).json({ message: "Aucune photo trouvée pour ce jeu" });
+    }
+
+    res.json(photos);
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+module.exports = app;

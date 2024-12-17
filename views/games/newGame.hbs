@@ -1,4 +1,4 @@
-<form action="/games/newGame" method="POST">
+<form action="/games/newGame" method="POST" enctype="multipart/form-data">
     <label for="name">Nom du jeu :</label>
     <input type="text" id="name" name="name" required>
     
@@ -22,6 +22,10 @@
             <option value="{{this.id}}">{{this.name}}</option>
         {{/each}}
     </select>
-    
+
+    <!-- Champ pour la photo -->
+    <label for="photo">Photo du jeu :</label>
+    <input type="file" id="photo" name="photo" accept="image/*">
+
     <button type="submit">Ajouter le jeu</button>
 </form>
