@@ -28,3 +28,8 @@ Technologies utilisées
     Express.js
     SQLite
     Prisma
+
+Groupe
+
+    Erblin Mazari A1
+    Lucas Pedragosa A1
