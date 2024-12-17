@@ -25,6 +25,8 @@ hbs.registerPartials(path.join(__dirname, "views/partials")); // On définit le 
 app.use(express.json());
 // Middleware pour traiter les corps de requête URL-encodés (par exemple, formulaires HTML)
 app.use(express.urlencoded({ extended: true }));
+// Fichier public
+app.use(express.static("public"));
 
 // Initialise les genres
 async function initTypes() {
@@ -83,7 +85,7 @@ app.get('/', async (req, res) => {
             },
         });
         // Envoie la page d'accueil avec les jeux mis en avant
-        res.render("homePage", { games });
+        res.render("homePage", { games, activePage: 'home' });
     }
     // Catch les erreurs
     catch (error) {
@@ -110,7 +112,7 @@ app.get('/games', async (req, res) => {
             },
     });
      // Envoie vers la page d'affichage
-        res.render("games/viewAll", { games });
+     res.render("games/viewAll", { games, activePage: 'games' });
     } 
      // Catch les erreurs
     catch (error) {
@@ -126,7 +128,7 @@ app.get('/games/newGame', async (req, res) => {
         const editors = await prisma.editor.findMany();
         const types = await prisma.type.findMany();
         // Rendre la vue du formulaire
-        res.render("games/newGame", { editors, types });
+        res.render("games/newGame", { editors, types, activePage: 'games'  });
     } catch (error) {
         console.error("Error fetching editors or types:", error);
         res.status(500).send("Une erreur est survenue lors de la récupération des éditeurs ou types.");
@@ -175,7 +177,7 @@ app.get('/game/:id', async (req, res) => {
 
         // Si le jeu existe, renvoie vers la page d'affichage
         if (game) {
-            res.render("games/view", { game });
+            res.render("games/view", { game, activePage: 'games'  });
         } else { // Le jeu n'existe pas
             res.status(404).send("Game not found.");
         }
@@ -200,7 +202,7 @@ app.get('/game/edit/:id', async (req, res) => {
 
         // Si le jeu existe, renvoie vers la page d'édition
         if (game) {
-            res.render("games/editGame", { game, editors, types });
+            res.render("games/editGame", { game, editors, types, activePage: 'games'  });
         } else { // Le jeu n'existe pas
             res.status(404).send("Game not found.");
         }
@@ -274,7 +276,7 @@ app.get('/games/addHighlighted', async (req, res) => {
         });
 
         // Envoie vers une page de sélection, avec tout les jeux et une checkbox (coché si a ajouté, et inversement)
-        res.render('games/addHighlighted', { games });
+        res.render('games/addHighlighted', { games, activePage: 'home'  });
     } 
     // Catch les erreurs
     catch (error) {
@@ -308,33 +310,10 @@ app.post('/games/addHighlighted', async (req, res) => {
     }
 });       
 
-////////// EDITEURS //////////
 
-// rajout d'un éditeur
-app.get('/games/newEditor', async (req, res) => {
-    res.render("editors/newEditor");
-});
-//requete post pour rajouter un editeur 
-app.post('/games/newEditor', async (req, res) => {
-    const { name } = req.body;
+// GENRES
 
-    try {
-        // Ajout d'un éditeur dans la base de données
-        await prisma.editor.create({
-            data: { name },
-        });
-
-        // Redirection vers la liste des éditeurs
-        res.redirect('/editors');
-    } catch (error) {
-        console.error("Erreur lors de l'ajout de l'éditeur :", error);
-        res.status(500).send("Une erreur est survenue lors de l'ajout de l'éditeur.");
-    }
-});
-
-
-
-// Affiche tout les éditeurs
+// Affiche tout les Genres
 app.get('/types', async (req, res) => {
     try {
         // Récupère la liste de tout les genres
@@ -345,7 +324,7 @@ app.get('/types', async (req, res) => {
             },
     });
     // Envoie vers la page d'affichage
-        res.render("types/viewAll", { types });
+    res.render("types/viewAll", { types, activePage: 'types' });
     } 
      // Catch les erreurs
     catch (error) {
@@ -354,7 +333,6 @@ app.get('/types', async (req, res) => {
     }
 });
 
-///////////// GENRES /////////////
 
 // Récupère un seul genre et l'affiche avec ses jeux
 app.get('/type/:id', async (req, res) => {
@@ -379,7 +357,7 @@ app.get('/type/:id', async (req, res) => {
 
         // Si le genre existe, renvoie vers la page d'affichage
         if (type) {
-            res.render("types/view", { type });
+            res.render("types/view", { type, activePage: 'types'  });
         } else { // Le genre n'existe pas
             res.status(404).send("Type not found.");
         }
@@ -404,7 +382,7 @@ app.get('/editors', async (req, res) => {
             },
     });
     // Envoie vers la page d'affichage
-        res.render("editors/viewAll", { editors });
+    res.render("editors/viewAll", { editors, activePage: 'editors' });
     } 
     // Catch les erreurs
     catch (error) {
@@ -435,7 +413,7 @@ app.get('/editor/:id', async (req, res) => {
         });
         // Si l'éditeur existe, renvoie vers la page d'affichage
         if (editor) {
-            res.render("editors/view", { editor });
+            res.render("editors/view", { editor, activePage: 'editors'  });
         } else { // Editeur n'existe pas
             res.status(404).send("Editor not found.");
         }
@@ -512,3 +490,30 @@ app.get('/editor/delete/:id', async (req, res) => {
         }
     }
 });
+
+// rajout d'un éditeur
+app.get('/editors/newEditor', async (req, res) => {
+    res.render("editors/newEditor", {activePage: 'editors' });
+});
+
+//requete post pour rajouter un editeur 
+app.post('/editors/newEditor', async (req, res) => {
+    const { name } = req.body;
+
+    try {
+        // Ajout d'un éditeur dans la base de données
+        await prisma.editor.create({
+            data: { name },
+        });
+
+        // Redirection vers la liste des éditeurs
+        res.redirect('/editors');
+    } catch (error) {
+        console.error("Erreur lors de l'ajout de l'éditeur :", error);
+        res.status(500).send("Une erreur est survenue lors de l'ajout de l'éditeur.");
+    }
+});
+
+
+
+  

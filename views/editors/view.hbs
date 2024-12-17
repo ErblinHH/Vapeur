@@ -2,20 +2,28 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/viewEditor.css">
     </head>
     <body>
-        <h1>Editeurs</h1>
-            <p>{{editor.name}}</p>
+        <div id="page">
+            <!-- Conteneur pour le titre et le nom de l'éditeur -->
+            <div id="header">
+                <h1 id="title">Éditeurs</h1>
+                <p id="name">{{editor.name}}</p>
+            </div>
+            <div id="actions">
+                <button type="submit" class="action-button" onclick="window.location.href='/editor/delete/{{editor.id}}'">Delete</button>
+            </div>
+
         <button type="submit" onclick="window.location.href='/editor/edit/{{editor.id}}'">Edit editor</button>
 
-        <h1>Liste des jeux</h1>
-
-        {{#each editor.games}}
-        <li>
-            <a href="/game/{{id}}">{{name}}</a>
-        </li>
-        {{/each}}
-        <button type="submit" onclick="window.location.href='/editor/delete/{{editor.id}}'">Delete</button>
-
+            <h1>Liste des jeux</h1>
+            <ul id="list">
+                {{#each editor.games}}
+                <li onclick="window.location.href='/game/{{id}}'">
+                    <a href="/game/{{id}}">{{name}}</a>
+                </li>
+                {{/each}}
+        </div>
     </body>
 </html>

@@ -2,15 +2,24 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/viewType.css"> 
     </head>
     <body>
-        <h1>Genre</h1>
-            <p>{{type.name}}</p>
-        <h1>Liste des jeux</h1>
-        {{#each type.games}}
-        <li>
-            <a href="/game/{{id}}">{{name}}</a>
-        </li>
-        {{/each}}
+        <div id="page">
+            <!-- Conteneur pour le titre et le genre -->
+            <div id="header">
+                <h1 id="title">Genre</h1>
+                <p id="genre-name">{{type.name}}</p>
+            </div>
+
+            <h1>Liste des jeux</h1>
+            <ul id="list">
+                {{#each type.games}}
+                <li onclick="window.location.href='/game/{{id}}'">
+                    <a href="/game/{{id}}">{{name}}</a>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
     </body>
 </html>

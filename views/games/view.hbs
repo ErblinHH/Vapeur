@@ -2,14 +2,49 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/viewGame.css"> 
     </head>
     <body>
-        <h1>Jeu</h1>
-            <p>{{game.name}}</p>
-            <p>{{game.description}}</p>
-            <p><a href="/editor/{{game.editorId}}">{{game.editor.name}}</a></p>
-            <p><a href="/type/{{game.typeId}}">{{game.type.name}}</a></p>
-            <button type="submit" onclick="window.location.href='/game/delete/{{game.id}}'">Delete</button>
-            <button type="submit" onclick="window.location.href='/game/edit/{{game.id}}'">Edit</button>
+        <div id="page">
+            <h1 id="title">Jeu</h1>
+            <div id="details">
+                <p id="name"><b>{{game.name}}</b></p>
+                <p id="description">{{game.description}}</p>
+                
+                <!-- Affichage de l'éditeur et du genre -->
+                <p id="game-editor">
+                    Editeur : <a href="/editor/{{game.editorId}}" class="game-link">{{game.editor.name}}</a>
+                </p>
+                <p id="game-type">
+                    Genre : <a href="/type/{{game.typeId}}" class="game-link">{{game.type.name}}</a>
+                </p>
+                
+                <!-- Affichage de la date de publication -->
+                <p id="release-date">
+                    Date de publication : <span id="release-date-value">{{game.releaseDate}}</span>
+                </p>
+
+                <div id="actions">
+                    <button type="submit" class="action-button" onclick="window.location.href='/game/delete/{{game.id}}'">Delete</button>
+                    <button type="submit" class="action-button" onclick="window.location.href='/game/edit/{{game.id}}'">Edit</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            function formatDate(dateStr) {
+                const date = new Date(dateStr);
+                const day = String(date.getDate()).padStart(2, '0'); // Assurer 2 chiffres pour le jour
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // Assurer 2 chiffres pour le mois
+                const year = date.getFullYear(); // Récupérer l'année
+                return `${day}/${month}/${year}`;
+            }
+
+            // Appliquer le formatage de la date après le rendu
+            const releaseDateElem = document.getElementById('release-date-value');
+            if (releaseDateElem) {
+                const formattedDate = formatDate(releaseDateElem.textContent);
+                releaseDateElem.textContent = formattedDate;
+            }
+        </script>
     </body>
 </html>
