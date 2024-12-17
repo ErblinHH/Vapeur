@@ -477,7 +477,7 @@ app.get('/editor/delete/:id', async (req, res) => {
             },
         });
         // Redirige vers la home page, après la suppression
-        res.redirect("/");
+        res.redirect("/editors");
     } 
 
     // Catch les erreurs

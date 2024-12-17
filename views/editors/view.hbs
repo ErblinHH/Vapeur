@@ -12,10 +12,11 @@
                 <p id="name">{{editor.name}}</p>
             </div>
             <div id="actions">
-                <button type="submit" class="action-button" onclick="window.location.href='/editor/delete/{{editor.id}}'">Delete</button>
+                <button type="submit" class="delete-button" onclick="window.location.href='/editor/delete/{{editor.id}}'">Delete</button>
+                <button type="submit" onclick="window.location.href='/editor/edit/{{editor.id}}'">Edit editor</button>
+
             </div>
 
-        <button type="submit" onclick="window.location.href='/editor/edit/{{editor.id}}'">Edit editor</button>
 
             <h1>Liste des jeux</h1>
             <ul id="list">
