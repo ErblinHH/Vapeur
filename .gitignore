@@ -50,12 +50,3 @@ debug/
 
 # Cache files
 .cache/
-
-# Node.js (déjà présent)
-node_modules/
-
-# Ignorer les fichiers binaires générés par npm dans node_modules
-node_modules/.bin/
-
-# Exclure le package-lock.json temporairement si nécessaire
-package-lock.json
