@@ -1,0 +1,98 @@
+/* Réinitialisation de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1b2838; /* Fond sombre typique de Steam */
+    color: #c6d4df; /* Texte gris clair */
+}
+
+/* Header Général */
+header {
+    background: linear-gradient(135deg, #171a21, #2a475e); /* Dégradé sombre Steam */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Ombre subtile */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Navigation Container */
+header nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+/* Style des liens */
+header nav ul li a {
+    position: relative; /* Position pour placer la barre sous le lien */
+    text-decoration: none;
+    color: #c6d4df; /* Gris clair typique */
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 3px;
+    transition: color 0.3s ease; /* Transition pour la couleur */
+}
+
+/* Barre sous les liens au survol */
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #66c0f4; /* Bleu vif Steam */
+    transition: width 0.3s ease; /* Animation douce de la barre */
+}
+
+/* Effet de survol avec changement de couleur */
+header nav ul li a:hover {
+    color: #66c0f4; /* Bleu vif Steam */
+}
+
+header nav ul li a:hover::after {
+    width: 100%; /* La barre s'étend sous le lien */
+}
+
+/* Style pour le lien actif */
+header nav ul li a.active {
+    color: #66c0f4; /* Bleu vif */
+    border-bottom: 2px solid #66c0f4; /* Soulignement bleu vif */
+}
+
+
+header nav ul li a:hover {
+    border-color: #66c0f4; /* Bordure bleu vif */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    header nav {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    header nav ul li a {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+}

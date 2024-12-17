@@ -2,14 +2,25 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/viewGame.css"> 
     </head>
     <body>
-        <h1>Jeu</h1>
-            <p>{{game.name}}</p>
-            <p>{{game.description}}</p>
-            <p><a href="/editor/{{game.editorId}}">{{game.editor.name}}</a></p>
-            <p><a href="/type/{{game.typeId}}">{{game.type.name}}</a></p>
-            <button type="submit" onclick="window.location.href='/game/delete/{{game.id}}'">Delete</button>
-            <button type="submit" onclick="window.location.href='/game/edit/{{game.id}}'">Edit</button>
+        <div id="page">
+            <h1 id="title">Jeu</h1>
+            <div id="details">
+                <p id="name"><b>{{game.name}}</b></p>
+                <p id="description">{{game.description}}</p>
+                <p id="game-editor">
+                    <a href="/editor/{{game.editorId}}" class="game-link">{{game.editor.name}}</a>
+                </p>
+                <p id="game-type">
+                    <a href="/type/{{game.typeId}}" class="game-link">{{game.type.name}}</a>
+                </p>
+                <div id="actions">
+                    <button type="submit" class="action-button" onclick="window.location.href='/game/delete/{{game.id}}'">Delete</button>
+                    <button type="submit" class="action-button" onclick="window.location.href='/game/edit/{{game.id}}'">Edit</button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

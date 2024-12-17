@@ -2,14 +2,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/viewAll.css"> 
     </head>
     <body>
-        <h1>Liste des éditeurs</h1>
-        {{#each editors}}
-        <li>
-            <a href="/editor/{{id}}">{{name}}</a>
-        </li>
-        {{/each}}
-        <button type="submit" onclick="window.location.href='/games/newEditor'">Add new editor</button>
+        <div id="page">
+            <h1>Liste des éditeurs</h1>
+            <ul id="list">
+                {{#each editors}}
+                <li onclick="window.location.href='/editor/{{id}}'">
+                    <a href="/editor/{{id}}">{{name}}</a> 
+                </li>
+                {{/each}}
+            </ul>
+            <button id="add-btn" type="submit" onclick="window.location.href='/editor/newEditor'">Add new editor</button>
+        </div>
     </body>
 </html>

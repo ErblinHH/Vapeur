@@ -1,0 +1,101 @@
+/* Réinitialisation de base pour le corps de la page */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1b2838; /* Fond sombre pour correspondre au style du header */
+    color: #c6d4df; /* Texte gris clair comme dans le header */
+    margin: 0;
+    padding: 0;
+}
+
+/* Style du titre principal uniquement dans cette page */
+#page h1 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 2rem;
+    color: #c6d4df; /* Gris clair pour le titre */
+}
+
+/* Liste des éditeurs avec un id spécifique pour cette page */
+#list {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 800px; /* Largeur maximale pour centrer la liste */
+}
+
+/* Conteneur de chaque éditeur qui est maintenant un bouton cliquable */
+#list li {
+    background-color: #2a475e; /* Fond plus foncé pour correspondre à l'ambiance du header */
+    border: 1px solid #444; /* Bordure plus sombre */
+    margin-bottom: 10px; /* Espacement entre les éléments */
+    border-radius: 5px; /* Coins arrondis pour un effet plus doux */
+    padding: 15px; /* Augmenter le padding pour aérer le contenu */
+    display: flex;
+    justify-content: center; /* Centrer le contenu horizontalement */
+    align-items: center; /* Centrer le contenu verticalement */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Légère ombre pour les éléments */
+    transition: all 0.3s ease;
+    cursor: pointer; /* Indique que l'élément est cliquable */
+    text-align: center; /* Centrer le texte */
+}
+
+#list li a {
+    display: block; /* Rendre le lien un bloc entier */
+    text-decoration: none;
+    color: #c6d4df; /* Gris clair pour les liens */
+    font-weight: 600;
+    font-size: 1.2rem; /* Augmenter la taille du texte pour plus de lisibilité */
+}
+
+/* Effet de survol sur le conteneur de l'éditeur */
+#list li:hover {
+    background-color: #66c0f4; /* Changer la couleur de fond lors du survol */
+}
+
+#list li a:hover {
+    color: #171a21; /* Couleur sombre du texte lorsqu'on survole le lien */
+}
+
+/* Bouton pour ajouter un éditeur */
+#add-btn {
+    display: block;
+    margin: 30px auto;
+    background-color: #66c0f4; /* Bleu vif, comme dans le header */
+    color: #fff; /* Texte en blanc */
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Effet de survol sur le bouton */
+#add-btn:hover {
+    background-color: #4292c3; /* Bleu plus foncé au survol */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    #page h1 {
+        font-size: 1.5rem; /* Taille du titre réduite sur mobile */
+    }
+
+    #list {
+        padding: 0 20px;
+    }
+
+    #list li {
+        flex-direction: column; /* Empile les éléments verticalement */
+        align-items: flex-start;
+    }
+
+    #list a {
+        font-size: 1rem; /* Taille du texte plus petite sur mobile */
+    }
+
+    #add-btn {
+        width: 100%; /* Le bouton prend toute la largeur sur mobile */
+    }
+}

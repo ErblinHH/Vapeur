@@ -1,10 +1,25 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Site</title>
+  <link rel="stylesheet" href="/header.css"> 
 <header>
   <nav>
     <ul>
-      <li><a href="/">Accueil</a></li>
-      <li><a href="/games">Liste des Jeux</a></li>
-      <li><a href="/editors">Liste des Éditeurs</a></li>
-      <li><a href="/types">Liste des Genres</a></li>
+      <li>
+        <a href="/" class="{{#if (eq activePage 'home')}}active{{/if}}">Accueil</a>
+      </li>
+      <li>
+        <a href="/games" class="{{#if (eq activePage 'games')}}active{{/if}}">Jeux</a>
+      </li>
+      <li>
+        <a href="/editors" class="{{#if (eq activePage 'editors')}}active{{/if}}">Éditeurs</a>
+      </li>
+      <li>
+        <a href="/types" class="{{#if (eq activePage 'types')}}active{{/if}}">Genres</a>
+      </li>
     </ul>
   </nav>
 </header>
+
+

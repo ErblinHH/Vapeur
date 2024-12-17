@@ -1,0 +1,138 @@
+/* Réinitialisation de base pour le corps de la page */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1b2838; /* Fond sombre pour correspondre au style du header */
+    color: #c6d4df; /* Texte gris clair comme dans le header */
+    margin: 0;
+    padding: 0;
+}
+
+/* Conteneur principal pour le titre, genre et liste des jeux */
+#page {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* Conteneur pour le titre et le genre */
+#header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Style du titre principal uniquement dans cette page */
+#title, h1 {
+    font-size: 2rem;
+    color: #c6d4df; /* Gris clair pour le titre */
+    margin-bottom: 10px;
+}
+
+/* Style du nom du genre */
+#name {
+    font-size: 1.3rem;
+    color: #66c0f4; /* Bleu pour le nom du genre */
+}
+
+h1 {
+    text-align: center;
+}
+
+/* Liste des jeux */
+#list {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+#list li {
+    background-color: #2a475e; /* Fond sombre */
+    border: 1px solid #444;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    text-align: center;
+}
+
+#list li a {
+    display: block;
+    text-decoration: none;
+    color: #c6d4df;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+#list li:hover {
+    background-color: #66c0f4; /* Changer la couleur au survol */
+}
+
+#list li a:hover {
+    color: #171a21; /* Changer la couleur du lien au survol */
+}
+
+/* Style pour le conteneur du bouton 'Delete' */
+#actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Style du bouton Delete */
+.action-button {
+    background-color: #ff4d4d; /* Rouge pour la suppression */
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px; /* Espacement à droite */
+}
+
+/* Effet de survol sur le bouton Delete */
+.action-button:hover {
+    background-color: #ff1a1a; /* Rouge plus foncé au survol */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    #title {
+        font-size: 1.5rem; /* Taille du titre réduite sur mobile */
+    }
+
+    #header {
+        margin-bottom: 15px;
+    }
+
+    #genre-name {
+        font-size: 1.2rem; /* Réduire la taille du nom du genre */
+    }
+
+    #list {
+        padding: 0 20px;
+    }
+
+    #list li {
+        flex-direction: column; /* Empiler les éléments verticalement sur mobile */
+        align-items: flex-start;
+    }
+
+    #list a {
+        font-size: 1rem; /* Réduire la taille des liens */
+    }
+
+    /* Adapter le bouton à l'écran mobile */
+    .action-button {
+        width: 100%; /* Le bouton prend toute la largeur sur mobile */
+        font-size: 1.1rem; /* Taille du texte légèrement augmentée sur mobile */
+        padding: 14px 20px; /* Plus de padding pour un effet visuel adapté */
+    }
+}
