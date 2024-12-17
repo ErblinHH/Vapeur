@@ -22,7 +22,7 @@ Démarrez l'application :
 
     node Serveur.js
 
-🛠️ Technologies utilisées
+Technologies utilisées
 
     Node.js
     Express.js
