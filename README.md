@@ -8,11 +8,13 @@ Vapeur est une application web pour gérer une collection de jeux vidéo avec de
 Accédez au dossier du projet :
 
     cd vapeur
-Installez les dépendances :
+Si vous n'avez pas déjà prisma:
 
     npm install express prisma sqlite3
-    npx prisma init
-    npx prisma migrate dev --name init
+    
+ Initialisation de la base de données : 
+    
+    npx prisma migrate dev init
     npx prisma generate
 
 
