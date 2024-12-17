@@ -313,7 +313,7 @@ app.post('/games/addHighlighted', async (req, res) => {
 
 // GENRES
 
-// Affiche tout les éditeurs
+// Affiche tout les Genres
 app.get('/types', async (req, res) => {
     try {
         // Récupère la liste de tout les genres
@@ -332,7 +332,6 @@ app.get('/types', async (req, res) => {
         res.status(500).send("Une erreur est survenue lors de la récupération des genres."); 
     }
 });
-
 
 
 // Récupère un seul genre et l'affiche avec ses jeux
@@ -370,7 +369,7 @@ app.get('/type/:id', async (req, res) => {
 });
 
 
-// EDITEURS
+///////////// EDITEURS /////////////
 
 // Affiche tout les éditeurs
 app.get('/editors', async (req, res) => {
@@ -426,7 +425,46 @@ app.get('/editor/:id', async (req, res) => {
     }
 });
 
+app.get('/editor/edit/:id', async (req, res) => {
+    const { id } = req.params; // Récupére l'id dans l'url
+    try {
+        // Récupérer l'éditeur
+        const editor = await prisma.editor.findUnique({
+            where: { id: parseInt(id) },
+        });
 
+        // Si l'éditeur existe, renvoie vers la page d'édition
+        if (editor) {
+            res.render("editors/edit", { editor });
+        } else { // L'éditeur n'existe pas
+            res.status(404).send("Editor not found.");
+        }
+    } 
+    // Catch les erreurs
+    catch (error) {
+        console.error("Error fetching editor for edit:", error);
+        res.status(500).send("Une erreur est survenue lors de la récupération de l'éditeur.");
+    }
+});
+
+app.post('/editor/edit/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    try {
+        // Mettre à jour l'éditeur dans la base de données
+        await prisma.editor.update({
+            where: { id: parseInt(id) },
+            data: { name },
+        });
+
+        // Rediriger vers la liste des éditeurs
+        res.redirect('/editors');
+    } catch (error) {
+        console.error("Error updating editor:", error);
+        res.status(500).send("Une erreur est survenue lors de la modification de l'éditeur.");
+    }
+});
 
 // Suppression d'un éditeur
 app.get('/editor/delete/:id', async (req, res) => {
