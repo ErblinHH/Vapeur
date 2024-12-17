@@ -1,0 +1,136 @@
+/* Réinitialisation de base pour le corps de la page */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1b2838; /* Fond sombre */
+    color: #c6d4df; /* Texte gris clair */
+    margin: 0;
+    padding: 0;
+}
+
+/* Conteneur principal pour le formulaire */
+#page {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* Style du titre de la page */
+#title {
+    text-align: center;
+    font-size: 2rem;
+    color: #c6d4df;
+    margin-bottom: 30px;
+}
+
+/* Formulaire principal */
+.form-container {
+    background-color: #2a475e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Style des groupes de champs (label + input/select/textarea) */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Style des labels */
+.form-group label {
+    display: block;
+    font-size: 1rem;
+    color: #c6d4df;
+    margin-bottom: 5px;
+}
+
+/* Style des champs (input, textarea, select) */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #1b2838;
+    color: #c6d4df;
+    margin-top: 5px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #66c0f4; /* Ajout d'une couleur pour la bordure au focus */
+    outline: none;
+}
+
+/* Style pour les textarea (par défaut) */
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Style pour le bouton de soumission */
+.form-actions {
+    text-align: center;
+}
+
+.action-button {
+    background-color: #66c0f4;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #4292c3;
+}
+
+/* Lien de retour */
+.back-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+a.game-link {
+    color: #66c0f4;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a.game-link:hover {
+    color: #fff;
+}
+
+/* Responsive Design pour petits écrans */
+@media screen and (max-width: 768px) {
+    #title {
+        font-size: 1.5rem;
+    }
+
+    .form-container {
+        padding: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 1rem;
+    }
+
+    .action-button {
+        width: 100%;
+    }
+}
