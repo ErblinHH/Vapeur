@@ -10,7 +10,7 @@ Accédez au dossier du projet :
     cd vapeur
 Si vous n'avez pas déjà prisma:
 
-    npm install express prisma sqlite3
+    npm install prisma @prisma/client sqlite3
     
 Ajouter un fichier nommé : ".env" à la racine du projet. Puis ajouter cette ligne dedans et sauvegardé:
 
@@ -18,7 +18,7 @@ Ajouter un fichier nommé : ".env" à la racine du projet. Puis ajouter cette li
     
  Initialisation de la base de données : 
     
-    npx prisma migrate dev init
+    npx prisma migrate dev
     npx prisma generate
 
 
