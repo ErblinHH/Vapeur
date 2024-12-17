@@ -2,14 +2,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/viewHighlighted.css"> 
     </head>
     <body>
-        <h1>Jeux mis en avant</h1>
-        {{#each games}}
-        <li>
-            <a href="/game/{{id}}">{{name}}</a>
-        </li>
-        {{/each}}
-        <h3><a href="/games/addHighlighted">Ajouter des jeux</a></h3>
+        <div id="page">
+            <h1>Jeux mis en avant</h1>
+            <ul id="games-list">
+                {{#each games}}
+                <li class="game-item" onclick="window.location.href='/game/{{id}}'">
+                    <a href="/game/{{id}}">{{name}}</a> 
+                </li>
+                {{/each}}
+            </ul>
+            <h3><a id="add-game-link" href="/games/addHighlighted">Ajouter des jeux</a></h3>
+        </div>
     </body>
 </html>

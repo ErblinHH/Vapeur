@@ -29,7 +29,6 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-   
 }
 
 /* Style pour la description du jeu */
@@ -91,6 +90,16 @@ body {
 
 .action-button:nth-child(2):hover {
     background-color: #4292c3; /* Bleu plus foncé au survol */
+}
+
+/* Ajouter un style pour l'affichage de l'éditeur, du genre et de la date */
+#game-editor, #game-type, #release-date {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+#release-date {
+    color: #b0b0b0; /* Un gris plus doux pour la date de publication */
 }
 
 /* Liste des jeux */
