@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un Éditeur</title>
+</head>
+<body>
+    <h1>Modifier l'Éditeur : {{editor.name}}</h1>
+    <form action="/editor/edit/{{editor.id}}" method="POST">
+        <div>
+            <label for="name">Nom de l'Éditeur :</label>
+            <input type="text" id="name" name="name" value="{{editor.name}}" required>
+        </div>
+        <button type="submit">Enregistrer les modifications</button>
+    </form>
+
+    <a href="/editors">Retour à la liste des éditeurs</a>
+</body>
+</html>
