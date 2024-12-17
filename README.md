@@ -12,6 +12,10 @@ Si vous n'avez pas déjà prisma:
 
     npm install express prisma sqlite3
     
+Ajouter un fichier nommé : ".env" à la racine du projet. Puis ajouter cette ligne dedans et sauvegardé:
+
+    DATABASE_URL="file:./database.db"
+    
  Initialisation de la base de données : 
     
     npx prisma migrate dev init
