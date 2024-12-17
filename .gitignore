@@ -50,3 +50,6 @@ debug/
 
 # Cache files
 .cache/
+
+# SQLite journal files
+prisma/*.db-journal
